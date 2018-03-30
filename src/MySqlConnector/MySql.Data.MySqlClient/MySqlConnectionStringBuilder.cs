@@ -213,6 +213,15 @@ namespace MySql.Data.MySqlClient
 			set => MySqlConnectionStringOption.UseCompression.SetValue(this, value);
 		}
 
+		public bool BufferResultSets
+		{
+			get => MySqlConnectionStringOption.BufferResultSets.GetValue(this);
+			set=> MySqlConnectionStringOption.BufferResultSets.SetValue(this,value);
+		}
+
+
+
+
 		// Other Methods
 		public override bool ContainsKey(string key)
 		{
@@ -297,6 +306,8 @@ namespace MySql.Data.MySqlClient
 		public static readonly MySqlConnectionStringOption<bool> TreatTinyAsBoolean;
 		public static readonly MySqlConnectionStringOption<bool> UseAffectedRows;
 		public static readonly MySqlConnectionStringOption<bool> UseCompression;
+
+		public static readonly MySqlConnectionStringOption<bool> BufferResultSets;
 
 		public static MySqlConnectionStringOption TryGetOptionForKey(string key) =>
 			s_options.TryGetValue(key, out var option) ? option : null;
@@ -454,6 +465,10 @@ namespace MySql.Data.MySqlClient
 
 			AddOption(UseCompression = new MySqlConnectionStringOption<bool>(
 				keys: new[] { "Compress", "Use Compression", "UseCompression" },
+				defaultValue: false));
+
+			AddOption(BufferResultSets = new MySqlConnectionStringOption<bool>(
+				keys: new[] { "BufferResultSets"},
 				defaultValue: false));
 		}
 
